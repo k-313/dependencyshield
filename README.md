@@ -90,18 +90,24 @@ Run the backend and frontend services in separate PowerShell windows:
 ```powershell
 cd C:\Users\user\.gemini\antigravity\scratch\dependencyshield\backend
 .\.venv\Scripts\Activate.ps1
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+
+# Bind to 0.0.0.0 (accessible locally and across LAN / VM / WSL interfaces)
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+# Or simply: python -m app.main
 ```
-- API Base: `http://localhost:8000`
+- API Base: `http://localhost:8000` (or `http://<your-lan-ip>:8000`)
 - Interactive Swagger Docs: `http://localhost:8000/docs`
 - Health Endpoint: `http://localhost:8000/health/live`
 
 ### Terminal 2: Next.js Frontend
 ```powershell
 cd C:\Users\user\.gemini\antigravity\scratch\dependencyshield\frontend
+
+# Starts Next.js bound to 0.0.0.0:3000 (accessible locally and across LAN)
 npm.cmd run dev
 ```
-- Web Application UI: `http://localhost:3000`
+- Web Application UI: `http://localhost:3000` (or `http://<your-lan-ip>:3000`)
+- *Tip*: The frontend automatically detects `window.location.hostname` so LAN/VM devices automatically connect to the backend at `http://<your-lan-ip>:8000`.
 
 ---
 

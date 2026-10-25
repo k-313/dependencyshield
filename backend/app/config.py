@@ -37,12 +37,20 @@ class Settings(BaseSettings):
     # AI Security Assistant (Optional)
     GEMINI_API_KEY: Optional[str] = os.getenv("GEMINI_API_KEY", None)
     
+    # Server Binding
+    HOST: str = os.getenv("HOST", "0.0.0.0")
+    PORT: int = int(os.getenv("PORT", "8000"))
+
     # CORS
     CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        "http://0.0.0.0:3000",
         "https://dependencyshield.vercel.app",
     ]
+    CORS_ORIGIN_REGEX: Optional[str] = (
+        r"^https?://(localhost|127\.0\.0\.1|0\.0\.0\.0|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$"
+    )
 
 
 settings = Settings()
